@@ -1,0 +1,8 @@
+{
+  "cleanUrls": true,
+  "rewrites": [
+    { "source": "/registration", "destination": "/registration.html" },
+    { "source": "/create-account", "destination": "/create-account.html" },
+    { "source": "/success", "destination": "/success.html" }
+  ]
+}
