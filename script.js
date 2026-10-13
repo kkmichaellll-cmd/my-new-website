@@ -23,7 +23,15 @@
     if(preview){location.href=next;return}
     const button=createForm.querySelector('button[type="submit"]'),status=createForm.querySelector('.form-status');
     const original=button.innerHTML;button.disabled=true;button.textContent='Finishing registration…';status.textContent='';
-    const payload={address:storage.get('otTourAddress'),email:document.getElementById('create-email').value.trim(),full_name:document.getElementById('create-name').value.trim(),phone:document.getElementById('create-phone').value.trim(),marketing:createForm.elements.marketing.checked,website:createForm.elements.website.value};
+    const payload={
+      address:storage.get('otTourAddress'),
+      email:document.getElementById('create-email').value.trim(),
+      full_name:document.getElementById('create-name').value.trim(),
+      password:document.getElementById('create-password').value,
+      phone:document.getElementById('create-phone').value.trim(),
+      marketing:createForm.elements.marketing.checked,
+      website:createForm.elements.website.value
+    };
     try{
       const response=await fetch('/api/register',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
       const result=await response.json().catch(()=>({}));
