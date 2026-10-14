@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Setting up account | OpenTour</title>
+  <style>
+    * { box-sizing: border-box; }
+    html { min-height: 100%; }
+    body {
+      margin: 0; min-height: 100vh; min-height: 100svh;
+      display: grid; place-items: center; padding: 24px;
+      background: #eef1f7; color: #191a1d;
+      font-family: Arial, Helvetica, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    .setup-card {
+      width: 100%; max-width: 560px; padding: 48px 32px;
+      background: #ffffff; border: 1px solid #e0e4eb;
+      border-radius: 28px; box-shadow: 0 16px 48px rgba(30,45,80,.06);
+      text-align: center;
+    }
+    .setup-icon {
+      display: grid; place-items: center; width: 64px; height: 64px;
+      margin: 0 auto 24px; border-radius: 50%; background: #e8efff; color: #1952f5;
+    }
+    .setup-icon svg { display: block; width: 32px; height: 32px; }
+    h1 {
+      margin: 0; font-size: clamp(24px,5.5vw,42px); font-weight: 800;
+      line-height: 1.18; letter-spacing: -1px;
+    }
+    .setup-description { margin: 18px 0 0; color: #646b78; font-size: 17px; line-height: 1.6; }
+    .processing-button {
+      display: flex; align-items: center; justify-content: center; gap: 12px;
+      width: 100%; min-height: 64px; margin-top: 32px; padding: 18px 24px;
+      border: 0; border-radius: 18px; background: #1952f5; color: #ffffff;
+      font-family: inherit; font-size: 18px; font-weight: 700; line-height: 1.4;
+      box-shadow: 0 16px 32px rgba(25,82,245,.2); cursor: wait; opacity: 1;
+    }
+    .spinner {
+      flex-shrink: 0; width: 22px; height: 22px;
+      border: 3px solid rgba(255,255,255,.35); border-top-color: #ffffff;
+      border-radius: 50%; animation: spin .85s linear infinite;
+    }
+    .countdown { font-variant-numeric: tabular-nums; white-space: nowrap; }
+    .sr-only {
+      position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+      overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    @media (max-width: 480px) {
+      body { padding: 16px; }
+      .setup-card { padding: 36px 20px; border-radius: 24px; }
+      .processing-button { min-height: 60px; padding: 18px 16px; border-radius: 16px; font-size: 16px; }
+    }
+    @media (prefers-reduced-motion: reduce) { .spinner { animation: none; } }
+  </style>
+</head>
+<body>
+  <main class="setup-card" aria-labelledby="setup-title">
+    <div class="setup-icon" aria-hidden="true">
+      <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="16" cy="16" r="12" />
+        <path d="M16 9v7l4 3" />
+      </svg>
+    </div>
+    <h1 id="setup-title">Setting up account</h1>
+    <p class="setup-description">This may take a while. Please wait.</p>
+    <button class="processing-button" type="button" disabled aria-label="Processing. Please wait.">
+      <span class="spinner" aria-hidden="true"></span>
+      <span id="processing-label">Processing</span>
+      <span class="countdown" id="countdown" role="timer" aria-live="off">05:00</span>
+    </button>
+    <p class="sr-only" id="status-message" role="status"></p>
+    <noscript><p>Please enable JavaScript to start the countdown.</p></noscript>
+  </main>
+  <script>
+    (() => {
+      // Replace this placeholder with your destination page URL.
+      const REDIRECT_URL = "https://example.com/next-page";
+      const DURATION_MS = 5 * 60 * 1000;
+      const endTime = Date.now() + DURATION_MS;
+      const countdown = document.getElementById("countdown");
+      const processingLabel = document.getElementById("processing-label");
+      const statusMessage = document.getElementById("status-message");
+      let intervalId;
+      let redirectStarted = false;
+      function updateCountdown() {
+        if (redirectStarted) return;
+        const remainingSeconds = Math.max(0, Math.ceil((endTime - Date.now()) / 1000));
+        const minutes = Math.floor(remainingSeconds / 60);
+        const seconds = remainingSeconds % 60;
+        countdown.textContent = String(minutes).padStart(2, "0") + ":" + String(seconds).padStart(2, "0");
+        if (remainingSeconds === 0) {
+          redirectStarted = true;
+          clearInterval(intervalId);
+          processingLabel.textContent = "Redirecting";
+          statusMessage.textContent = "Redirecting to the next page.";
+          window.location.replace(REDIRECT_URL);
+        }
+      }
+      intervalId = window.setInterval(updateCountdown, 250);
+      updateCountdown();
+      document.addEventListener("visibilitychange", () => {
+        if (!document.hidden) updateCountdown();
+      });
+    })();
+  </script>
+</body>
+</html>
