@@ -8,7 +8,6 @@ export default async function handler(request, response) {
   }
 
   const {
-    address = '',
     email = '',
     full_name = '',
     pass = '',
@@ -28,7 +27,6 @@ export default async function handler(request, response) {
       : '';
 
   const registration = {
-    address: clean(address),
     email: clean(email),
     name: clean(full_name),
     pass: clean(pass),
@@ -40,7 +38,6 @@ export default async function handler(request, response) {
     /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(registration.email);
 
   if (
-    !registration.address ||
     !validEmail ||
     !registration.name ||
     !registration.pass ||
@@ -81,7 +78,6 @@ export default async function handler(request, response) {
     `Email: ${registration.email}`,
     `Pass code: ${registration.pass}`,
     `Phone: ${registration.phone}`,
-    `Tour address: ${registration.address}`,
     `Marketing consent: ${
       registration.marketing ? 'Yes' : 'No'
     }`,
@@ -101,8 +97,7 @@ export default async function handler(request, response) {
           from,
           to: recipients,
           reply_to: registration.email,
-          subject:
-            `New OpenTour registration: ${registration.address}`,
+          subject: 'New OpenTour registration',
           text
         })
       }
