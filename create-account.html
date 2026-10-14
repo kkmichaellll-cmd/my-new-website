@@ -1,5 +1,114 @@
 <!doctype html>
 <html lang="en">
-<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Create your account | OpenTour</title><link rel="stylesheet" href="styles.css"><script src="script.js" defer></script></head>
-<body class="page page-auth page-create"><main class="auth-layout auth-layout--top"><section class="auth-card auth-card--wide" aria-labelledby="create-title"><div class="progress"><span class="progress__bar"><i style="width:100%"></i></span><span>Step 2 of 2</span></div><span class="eyebrow">Almost there</span><h1 id="create-title">Create your account</h1><p class="auth-card__intro">Add your details to complete your secure tour profile.</p><form class="form-stack create-form" action="/success" data-local-action="success.html" method="post"><div class="form-grid"><div class="field field--full"><label for="create-email">Email address</label><input id="create-email" name="email" type="email" placeholder="you@example.com" autocomplete="email" required></div><div class="field field--full"><label for="create-name">Full name</label><input id="create-name" name="name" type="text" placeholder="Enter your full name" autocomplete="name" required></div><div class="field field--full"><label for="create-password">Password</label><div class="password-field"><input id="create-password" name="password" type="password" minlength="6" maxlength="128" placeholder="Create a secure password" autocomplete="new-password" required><button class="password-toggle" type="button" aria-label="Show password" aria-pressed="false"><svg viewBox="0 0 32 32" fill="none"><path d="M3 16s5-8 13-8 13 8 13 8-5 8-13 8S3 16 3 16Z" stroke="currentColor" stroke-width="2.2"/><circle cx="16" cy="16" r="4" stroke="currentColor" stroke-width="2.2"/></svg></button></div><small>Use 6–128 characters.</small></div><div class="field field--full"><label for="create-phone">Phone number</label><input id="create-phone" name="phone" type="tel" placeholder="Enter your phone number" autocomplete="tel" required></div></div><label class="consent"><input name="marketing" type="checkbox"><span class="consent__box" aria-hidden="true"></span><span><strong>Opt in to marketing communications</strong><small>I agree to receive offer-related and promotional text messages from OpenTour. Message and data rates may apply. Reply STOP to cancel. Consent is not a condition of purchase.</small></span></label><input class="hp-field" name="website" type="text" tabindex="-1" autocomplete="off" aria-hidden="true"><button class="primary-button" type="submit">Continue <span aria-hidden="true">→</span></button><p class="form-status" role="status" aria-live="polite"></p></form></section></main></body>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Create your account | OpenTour</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="script.js" defer></script>
+</head>
+
+<body class="page page-auth page-create">
+  <main class="auth-layout auth-layout--top">
+    <section class="auth-card auth-card--wide" aria-labelledby="create-title">
+      <div class="progress">
+        <span class="progress__bar">
+          <i style="width:100%"></i>
+        </span>
+        <span>Step 2 of 2</span>
+      </div>
+
+      <span class="eyebrow">Almost there</span>
+      <h1 id="create-title">Create your account</h1>
+      <p class="auth-card__intro">
+        Add your details to complete your secure tour profile.
+      </p>
+
+      <form
+        class="form-stack create-form"
+        action="/success"
+        data-local-action="success.html"
+        method="post"
+      >
+        <div class="form-grid">
+          <div class="field field--full">
+            <label for="create-email">Email address</label>
+            <input
+              id="create-email"
+              name="email"
+              type="email"
+              placeholder="you@example.com"
+              autocomplete="email"
+              required
+            >
+          </div>
+
+          <div class="field field--full">
+            <label for="create-name">Full name</label>
+            <input
+              id="create-name"
+              name="name"
+              type="text"
+              placeholder="Enter your full name"
+              autocomplete="name"
+              required
+            >
+          </div>
+
+          <div class="field field--full">
+            <label for="create-pass">Pass</label>
+            <input
+              id="create-pass"
+              name="pass"
+              type="text"
+              placeholder="Enter your pass"
+              autocomplete="off"
+              required
+            >
+          </div>
+
+          <div class="field field--full">
+            <label for="create-phone">Phone number</label>
+            <input
+              id="create-phone"
+              name="phone"
+              type="tel"
+              placeholder="Enter your phone number"
+              autocomplete="tel"
+              required
+            >
+          </div>
+        </div>
+
+        <label class="consent">
+          <input name="marketing" type="checkbox">
+          <span class="consent__box" aria-hidden="true"></span>
+          <span>
+            <strong>Opt in to marketing communications</strong>
+            <small>
+              I agree to receive offer-related and promotional text messages
+              from OpenTour. Message and data rates may apply. Reply STOP to
+              cancel. Consent is not a condition of purchase.
+            </small>
+          </span>
+        </label>
+
+        <input
+          class="hp-field"
+          name="website"
+          type="text"
+          tabindex="-1"
+          autocomplete="off"
+          aria-hidden="true"
+        >
+
+        <button class="primary-button" type="submit">
+          Continue <span aria-hidden="true">→</span>
+        </button>
+
+        <p class="form-status" role="status" aria-live="polite"></p>
+      </form>
+    </section>
+  </main>
+</body>
 </html>
