@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Signup failed | OpenTour</title>
+  <title>Account created | OpenTour</title>
 
   <style>
     * {
@@ -27,7 +27,7 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    .failure-card {
+    .success-card {
       width: 100%;
       max-width: 560px;
       padding: 48px 32px;
@@ -38,19 +38,19 @@
       text-align: center;
     }
 
-    .failure-icon {
+    .success-icon {
       display: flex;
       justify-content: center;
       margin-bottom: 24px;
     }
 
-    .failure-icon svg {
+    .success-icon svg {
       display: block;
       width: 64px;
       height: 64px;
     }
 
-    .failure-card h1 {
+    .success-card h1 {
       margin: 0;
       font-size: clamp(24px, 5.5vw, 42px);
       font-weight: 800;
@@ -58,15 +58,7 @@
       letter-spacing: -1px;
     }
 
-    .failure-card h1 span {
-      display: block;
-    }
-
-    .failure-card h1 span + span {
-      margin-top: 8px;
-    }
-
-    .retry-button {
+    .continue-button {
       display: flex;
       align-items: center;
       justify-content: center;
@@ -82,14 +74,17 @@
       line-height: 1.4;
       text-decoration: none;
       box-shadow: 0 16px 32px rgba(25, 82, 245, 0.2);
-      transition: background-color 0.2s ease;
+      transition:
+        background-color 0.2s ease,
+        transform 0.2s ease;
     }
 
-    .retry-button:hover {
+    .continue-button:hover {
       background: #1244d9;
+      transform: translateY(-2px);
     }
 
-    .retry-button:focus-visible {
+    .continue-button:focus-visible {
       outline: 3px solid #1952f5;
       outline-offset: 5px;
     }
@@ -99,19 +94,19 @@
         padding: 16px;
       }
 
-      .failure-card {
+      .success-card {
         padding: 36px 20px;
         border-radius: 24px;
       }
 
-      .retry-button {
+      .continue-button {
         min-height: 60px;
         border-radius: 16px;
       }
     }
 
     @media (prefers-reduced-motion: reduce) {
-      .retry-button {
+      .continue-button {
         transition: none;
       }
     }
@@ -119,30 +114,37 @@
 </head>
 
 <body>
-  <main class="failure-card" aria-labelledby="failure-title">
-    <div class="failure-icon" aria-hidden="true">
+  <main class="success-card" aria-labelledby="success-title">
+    <div class="success-icon" aria-hidden="true">
       <svg viewBox="0 0 64 64" fill="none">
         <circle
           cx="32"
           cy="32"
           r="30"
-          fill="#FEE2E2"
+          fill="#DCFCE7"
         />
+
         <path
-          d="M23 23L41 41M41 23L23 41"
-          stroke="#DC2626"
+          d="M19 33L28 42L46 23"
+          stroke="#16A34A"
           stroke-width="5"
           stroke-linecap="round"
+          stroke-linejoin="round"
         />
       </svg>
     </div>
 
-    <h1 id="failure-title">
-      <span>Signup failed</span>
+    <h1 id="success-title">
+      Account created successfully
     </h1>
 
-    <!-- Replace # with your preferred URL -->
-    <a class="retry-button" href="https://opendoor.com/login">Try again</a>
+    <!-- Replace the placeholder URL with your destination URL -->
+    <a
+      class="continue-button"
+      href="https://example.com/login"
+    >
+      Continue
+    </a>
   </main>
 </body>
 </html>
