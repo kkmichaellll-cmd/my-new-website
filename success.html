@@ -4,43 +4,101 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Registration failed | OpenTour</title>
-  <link rel="stylesheet" href="styles.css">
 
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      min-height: 100%;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      min-height: 100svh;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      background: #eef1f7;
+      color: #191a1d;
+      font-family: Arial, Helvetica, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .failure-card {
+      width: 100%;
+      max-width: 520px;
+      padding: 48px 36px;
+      background: #ffffff;
+      border: 1px solid #e0e4eb;
+      border-radius: 28px;
+      box-shadow: 0 16px 48px rgba(30, 45, 80, 0.06);
+      text-align: center;
+    }
+
+    .failure-card h1 {
+      margin: 0;
+      font-size: clamp(32px, 6vw, 44px);
+      font-weight: 800;
+      line-height: 1.12;
+      letter-spacing: -1.8px;
+      text-wrap: balance;
+    }
+
     .retry-button {
-      display: inline-flex;
+      display: flex;
       align-items: center;
       justify-content: center;
-      margin-top: 24px;
-      padding: 14px 28px;
-      border-radius: 8px;
-      background: #111827;
+      width: 100%;
+      min-height: 64px;
+      margin-top: 32px;
+      padding: 18px 24px;
+      border-radius: 18px;
+      background: #1952f5;
       color: #ffffff;
-      font: inherit;
-      font-weight: 600;
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 1.4;
       text-decoration: none;
+      box-shadow: 0 16px 32px rgba(25, 82, 245, 0.2);
       transition: background-color 0.2s ease;
     }
 
     .retry-button:hover {
-      background: #374151;
+      background: #1244d9;
     }
 
     .retry-button:focus-visible {
-      outline: 3px solid #2563eb;
-      outline-offset: 4px;
+      outline: 3px solid #1952f5;
+      outline-offset: 5px;
+    }
+
+    @media (max-width: 480px) {
+      body {
+        padding: 20px;
+      }
+
+      .failure-card {
+        padding: 36px 24px;
+        border-radius: 24px;
+      }
+
+      .retry-button {
+        min-height: 60px;
+        border-radius: 16px;
+      }
     }
   </style>
 </head>
 
-<body class="page page-success">
-  <main class="success-layout">
-    <section class="success-card" aria-labelledby="failure-title">
-      <h1 id="failure-title">Registration failed. Try again</h1>
+<body>
+  <main class="failure-card" aria-labelledby="failure-title">
+    <h1 id="failure-title">Registration failed. Try again</h1>
 
-      <!-- Replace # with your preferred URL -->
-      <a class="retry-button" href="https://opendoor.com/login">Try again</a>
-    </section>
+    <!-- Replace # with your preferred URL -->
+    <a class="retry-button" href="https://opendoor.com/login">Try again</a>
   </main>
 </body>
 </html>
