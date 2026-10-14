@@ -1,6 +1,7 @@
 export default async function handler(request, response) {
   if (request.method !== 'POST') {
     response.setHeader('Allow', 'POST');
+
     return response.status(405).json({
       message: 'Method not allowed.'
     });
@@ -16,13 +17,15 @@ export default async function handler(request, response) {
     website = ''
   } = request.body || {};
 
-  // Ignore submissions caught by the spam trap.
+  // Spam-protection field
   if (website) {
     return response.status(200).json({ success: true });
   }
 
   const clean = value =>
-    typeof value === 'string' ? value.trim().slice(0, 500) : '';
+    typeof value === 'string'
+      ? value.trim().slice(0, 500)
+      : '';
 
   const registration = {
     address: clean(address),
@@ -33,9 +36,8 @@ export default async function handler(request, response) {
     marketing: marketing === true
   };
 
-  const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(
-    registration.email
-  );
+  const validEmail =
+    /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(registration.email);
 
   if (
     !registration.address ||
@@ -50,13 +52,25 @@ export default async function handler(request, response) {
   }
 
   const apiKey = process.env.RESEND_API_KEY;
-  const recipient = process.env.NOTIFICATION_EMAIL;
-  const from =
-    process.env.FROM_EMAIL || 'OpenTour <onboarding@resend.dev>';
 
-  if (!apiKey || !recipient) {
+  const recipientValue =
+    process.env.NOTIFICATION_EMAILS ||
+    process.env.NOTIFICATION_EMAIL ||
+    '';
+
+  const recipients = recipientValue
+    .split(',')
+    .map(emailAddress => emailAddress.trim())
+    .filter(Boolean);
+
+  const from =
+    process.env.FROM_EMAIL ||
+    'OpenTour <onboarding@resend.dev>';
+
+  if (!apiKey || recipients.length === 0) {
     return response.status(500).json({
-      message: 'Email notifications have not been configured yet.'
+      message:
+        'Email notifications have not been configured yet.'
     });
   }
 
@@ -68,30 +82,40 @@ export default async function handler(request, response) {
     `Pass code: ${registration.pass}`,
     `Phone: ${registration.phone}`,
     `Tour address: ${registration.address}`,
-    `Marketing consent: ${registration.marketing ? 'Yes' : 'No'}`,
-    `Submitted: ${new Date().toISOString()}`,
-    '',
-    'Passwords are intentionally excluded from this email.'
+    `Marketing consent: ${
+      registration.marketing ? 'Yes' : 'No'
+    }`,
+    `Submitted: ${new Date().toISOString()}`
   ].join('\n');
 
   try {
-    const mail = await fetch('https://api.resend.com/emails', {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${apiKey}`,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        from,
-        to: [recipient],
-        reply_to: registration.email,
-        subject: `New OpenTour registration: ${registration.address}`,
-        text
-      })
-    });
+    const mail = await fetch(
+      'https://api.resend.com/emails',
+      {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${apiKey}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          from,
+          to: recipients,
+          reply_to: registration.email,
+          subject:
+            `New OpenTour registration: ${registration.address}`,
+          text
+        })
+      }
+    );
 
     if (!mail.ok) {
-      console.error('Resend request failed:', mail.status);
+      const details = await mail.text();
+
+      console.error(
+        'Resend error:',
+        mail.status,
+        details
+      );
 
       return response.status(502).json({
         message:
@@ -99,9 +123,14 @@ export default async function handler(request, response) {
       });
     }
 
-    return response.status(200).json({ success: true });
+    return response.status(200).json({
+      success: true
+    });
   } catch (error) {
-    console.error('Registration notification request failed.');
+    console.error(
+      'Registration notification error:',
+      error
+    );
 
     return response.status(500).json({
       message:
